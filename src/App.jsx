@@ -11,10 +11,12 @@ import Publications from './pages/Publications';
 import Medicaments  from './pages/Medicaments';
 import Examens      from './pages/Examens';
 import Services     from './pages/Services';
+import CataloguePage from './pages/CataloguePage'; // 1. L'import est bien ici
 
 const Guard = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
   if (!isAuthenticated) return <Navigate to="/connexion" />;
+  if (user?.role !== 'ADMIN') return <Navigate to="/connexion" />;
   if (user?.role !== 'ADMIN') return <Navigate to="/connexion" />;
   return children;
 };
@@ -24,6 +26,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/connexion" element={<LoginPage />} />
+        
+        {/* Toutes les routes ici profitent du Guard et du AdminLayout */}
         <Route path="/" element={<Guard><AdminLayout /></Guard>}>
           <Route index              element={<Dashboard />} />
           <Route path="structures"  element={<Structures />} />
@@ -32,7 +36,10 @@ export default function App() {
           <Route path="medicaments" element={<Medicaments />} />
           <Route path="examens"     element={<Examens />} />
           <Route path="services"    element={<Services />} />
+          {/* 2. On place la route ici (sans le "/" devant, car elle hérite de la racine) */}
+          <Route path="catalogue"   element={<CataloguePage />} /> 
         </Route>
+
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
       <Toaster />

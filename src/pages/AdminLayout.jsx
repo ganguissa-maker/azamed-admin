@@ -1,4 +1,4 @@
-// src/pages/AdminLayout.jsx — avec Examens + Services
+// src/pages/AdminLayout.jsx — avec Examens + Services + Catalogue
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import {
@@ -10,12 +10,14 @@ import useAuthStore from '../store/authStore';
 const PUBLIC_URL     = import.meta.env.VITE_PUBLIC_URL     || 'http://localhost:5173';
 const STRUCTURES_URL = import.meta.env.VITE_STRUCTURES_URL || 'http://localhost:5174';
 
+// C'est ici qu'on ajoute l'élément pour le catalogue
 const nav = [
   { to:'/',              label:'Tableau de bord', icon:<LayoutDashboard size={17}/>, end:true },
   { to:'/structures',    label:'Établissements',  icon:<Building2 size={17}/> },
   { to:'/visiteurs',     label:'Visiteurs',        icon:<Users size={17}/> },
   { to:'/publications',  label:'Publications',     icon:<Newspaper size={17}/> },
   { divider: true, label: 'Catalogue' },
+  { to:'/catalogue',     label:'Catalogue médical',icon:<Pill size={17}/> }, // <- AJOUTÉ ICI
   { to:'/medicaments',   label:'Médicaments',     icon:<Pill size={17}/> },
   { to:'/examens',       label:'Examens',         icon:<TestTube2 size={17}/> },
   { to:'/services',      label:'Services médicaux',icon:<Activity size={17}/> },
