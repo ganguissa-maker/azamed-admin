@@ -11,7 +11,8 @@ import Publications from './pages/Publications';
 import Medicaments  from './pages/Medicaments';
 import Examens      from './pages/Examens';
 import Services     from './pages/Services';
-import CataloguePage from './pages/CataloguePage'; // 1. L'import est bien ici
+import CataloguePage from './pages/CataloguePage'; 
+import UtilisateursPage from './pages/UtilisateursPage';// 1. L'import est bien ici
 
 const Guard = ({ children }) => {
   const { isAuthenticated, user } = useAuthStore();
@@ -37,7 +38,8 @@ export default function App() {
           <Route path="examens"     element={<Examens />} />
           <Route path="services"    element={<Services />} />
           {/* 2. On place la route ici (sans le "/" devant, car elle hérite de la racine) */}
-          <Route path="catalogue"   element={<CataloguePage />} /> 
+          <Route path="catalogue"   element={<CataloguePage />} />
+          <Route path="/utilisateurs" element={<UtilisateursPage/>}/> 
         </Route>
 
         <Route path="*" element={<Navigate to="/" />} />
@@ -45,4 +47,5 @@ export default function App() {
       <Toaster />
     </BrowserRouter>
   );
+  <Link to="/utilisateurs">👥 Utilisateurs</Link>
 }
