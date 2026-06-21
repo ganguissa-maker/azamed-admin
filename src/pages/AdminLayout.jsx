@@ -6,6 +6,7 @@ import {
   Pill, TestTube2, Activity, LogOut, Shield, Menu, X, ExternalLink,
 } from 'lucide-react';
 import useAuthStore from '../store/authStore';
+import { Pill } from 'lucide-react';
 
 const PUBLIC_URL     = import.meta.env.VITE_PUBLIC_URL     || 'http://localhost:5173';
 const STRUCTURES_URL = import.meta.env.VITE_STRUCTURES_URL || 'http://localhost:5174';
@@ -21,6 +22,7 @@ const nav = [
   { to:'/medicaments',   label:'Médicaments',     icon:<Pill size={17}/> },
   { to:'/examens',       label:'Examens',         icon:<TestTube2 size={17}/> },
   { to:'/services',      label:'Services médicaux',icon:<Activity size={17}/> },
+  { to:'/medicaments-proposes', label:'Medic. proposes', icon:<Pill size={17}/> },
 ];
 
 function Sidebar({ onClose }) {
