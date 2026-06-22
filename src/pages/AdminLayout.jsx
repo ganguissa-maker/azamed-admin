@@ -6,7 +6,6 @@ import {
   Pill, TestTube2, Activity, LogOut, Shield, Menu, X, ExternalLink,
 } from 'lucide-react';
 import useAuthStore from '../store/authStore';
-import { Pill } from 'lucide-react';
 
 const PUBLIC_URL     = import.meta.env.VITE_PUBLIC_URL     || 'http://localhost:5173';
 const STRUCTURES_URL = import.meta.env.VITE_STRUCTURES_URL || 'http://localhost:5174';
