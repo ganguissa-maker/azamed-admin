@@ -1,7 +1,7 @@
 // src/pages/Visiteurs.jsx — Gestion utilisateurs publics + médecins (CORRIGÉ)
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { CheckCircle, Search, Stethoscope, User, Shield, Briefcase } from 'lucide-react';
+import { CheckCircle, Search, Stethoscope, User, Shield, Briefcase, Trash2 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { toast } from '../components/ui/Toaster';
@@ -52,6 +52,17 @@ export default function Visiteurs() {
       queryClient.invalidateQueries(['admin-users-stats']);
       toast.success('Vérification retirée.');
     },
+  });
+
+  // ✅ Suppression définitive (médecins et délégués uniquement)
+  const { mutate: supprimer, isPending: deleting } = useMutation({
+    mutationFn: (id) => api.delete(`/admin/users/${id}`),
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(['admin-users']);
+      queryClient.invalidateQueries(['admin-users-stats']);
+      toast.success(res.data?.message || 'Compte supprimé.');
+    },
+    onError: (e) => toast.error(e.response?.data?.error || 'Erreur lors de la suppression'),
   });
 
   const filtres = [
@@ -194,6 +205,20 @@ export default function Visiteurs() {
                     title="Retirer la vérification"
                     className="flex items-center gap-1.5 px-3 py-1.5 bg-green-50 text-green-600 hover:bg-green-100 rounded-lg text-xs font-medium transition-colors">
                     <Shield size={13}/> Vérifié
+                  </button>
+                )}
+                {(u.role === 'MEDECIN' || u.role === 'DELEGUE') && (
+                  <button
+                    onClick={() => {
+                      const label = u.role === 'MEDECIN' ? 'ce médecin' : 'ce délégué médical';
+                      if (window.confirm(`Supprimer définitivement ${label} ? Cette action est irréversible.`)) {
+                        supprimer(u.id);
+                      }
+                    }}
+                    disabled={deleting}
+                    title="Supprimer ce compte"
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-100 rounded-lg text-xs font-medium transition-colors disabled:opacity-50">
+                    <Trash2 size={13}/>
                   </button>
                 )}
               </div>
